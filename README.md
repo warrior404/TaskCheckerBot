@@ -10,3 +10,5 @@
 За запуск скрипта отвечает 'main.py'
 
 Скрип был написан на Python3.7
+
+'Procfile' и 'requirements.txt' необходимы для запуска бота на Heroku
