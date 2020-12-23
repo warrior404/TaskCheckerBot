@@ -121,12 +121,31 @@ def task_checker(bot, user, task_msg, ans):
             # Спросим статус
             bot.reply_to(task_msg, 'Задача выполнена?', reply_markup=yes_no())
         else:
-            time.sleep()
+            time.sleep(60*30)
             ask_task(bot, user, task_msg)
 
             return
 
     if ans == 'Нет':
+        # Время юзера
+        user_nowtime = dt.datetime.utcnow() + dt.timedelta(hours=user.utc_offset)
+
+        # Булева переменная для рабочего времемни.
+        working_hours = True if (user_nowtime.time() >= user.start_time) and \
+                                (user_nowtime.time() <= user.end_time) else False
+
+        # Цикл ожидания рабочих часов
+        while not working_hours:
+            # Спим
+            time.sleep(60*60*1.5)
+
+            # Время юзера
+            user_nowtime = dt.datetime.utcnow() + dt.timedelta(hours=user.utc_offset)
+
+            # Булева переменная для рабочего времемни.
+            working_hours = True if (user_nowtime.time() >= user.start_time) and \
+                                    (user_nowtime.time() <= user.end_time) else False
+
         # Запустим Тред задачи
         t = th.Thread(target=ask_task, args=(bot, user, task_msg))
         t.start()

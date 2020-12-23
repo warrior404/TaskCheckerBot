@@ -17,3 +17,4 @@ class Task:
         self.message = message
         self.username = None
         self.start_time = None
+        self.notify_count = 0
