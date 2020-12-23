@@ -121,6 +121,7 @@ def task_checker(bot, user, task_msg, ans):
             # Спросим статус
             bot.reply_to(task_msg, 'Задача выполнена?', reply_markup=yes_no())
         else:
+            time.sleep()
             ask_task(bot, user, task_msg)
 
             return

@@ -58,7 +58,7 @@ def callback_inline(call):
 def send_welcome(message):
     msg = bot.reply_to(message, """\
 Камчатка, Чукотка - UTC/GMT+12
-Магадан, Верхоянск, Сахалин, Владивосток - UTC/GMT+10
+Магадан, Владивосток - UTC/GMT+10
 Якутск - UTC/GMT+9
 Иркутск - UTC/GMT+8
 Красноярск - UTC/GMT+7
@@ -66,8 +66,8 @@ def send_welcome(message):
 Екатеринбург - UTC/GMT+5
 Самара, Ижевск - UTC/GMT+4
 Москва  Московское время - UTC/GMT+3
-Париж  "Среднеевропейское (Центральноевропейское) время" - UTC/GMT+1
-Лондон "Гринвичское время" - UTC/GMT+0
+Париж - UTC/GMT+1
+Лондон - UTC/GMT+0
 "Среднеатлантическое время" - UTC/GMT-2
 Аргентина, Буэнос-Айрес - UTC/GMT-3
 Канада,  "Атлантическое время" - UTC/GMT-4
@@ -262,7 +262,12 @@ def hello(task_msg):
     # Основные параметры сообщения
     text = str(task_msg.text)
     id = str(task_msg.chat.id)
-    user = user_dict[id]
+    try:
+        user = user_dict[id]
+    except Exception:
+        bot.reply_to(task_msg, 'Юзер не зарегистрирован. Введите /start для регистрации.')
+        return
+
     username = str(task_msg.from_user.username)
     print(f'{id + " @" + username}: {text}\n')
 
